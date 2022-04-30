@@ -1,4 +1,4 @@
-
+import random
 # Soldier
 
 
@@ -52,4 +52,42 @@ class Saxon(Soldier):
 
 
 class War:
-    pass
+    def __init__(self):
+        self.vikingArmy = []
+        self.saxonArmy = []
+
+    def addViking(self, viking):
+        self.vikingArmy.append(viking)
+
+    def addSaxon(self, saxon):
+        self.saxonArmy.append(saxon)
+
+    def vikingAttack(self):
+        # viking & saxon indeces
+        idx_viking = random.choice(range(len(self.vikingArmy)))
+        idx_saxon = random.choice(range(len(self.saxonArmy)))
+       
+        # inflict damage
+        damage = self.vikingArmy[idx_viking].attack()
+        attack_result = self.saxonArmy[idx_saxon].receiveDamage(damage)
+
+        # remove dead saxon
+        if self.saxonArmy[idx_saxon].health <= 0:
+            self.saxonArmy.pop(idx_saxon)
+
+        return attack_result
+
+    def saxonAttack(self):
+        # viking & saxon indeces
+        idx_viking = random.choice(range(len(self.vikingArmy)))
+        idx_saxon = random.choice(range(len(self.saxonArmy)))
+       
+        # inflict damage
+        damage = self.saxonArmy[idx_saxon].attack()
+        attack_result = self.vikingArmy[idx_viking].receiveDamage(damage)
+
+        # remove dead saxon
+        if self.vikingArmy[idx_viking].health <= 0:
+            self.vikingArmy.pop(idx_viking)
+
+        return attack_result
